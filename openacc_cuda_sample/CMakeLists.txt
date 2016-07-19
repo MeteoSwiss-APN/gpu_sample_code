@@ -36,17 +36,18 @@ set(FORTRAN_SRC
     src/m_timing.f90
     src/main.f90
     )
-set CXX_SRC(
+set (C_SRC
     src/saturation_adjustment.cu
     )
 
-cuda_add_library(
-    cxx_library
-    ${CXX_SRC}
+cuda_compile(
+    CUDA_COMPILED
+    ${C_SRC}
     OPTIONS ${NVCC_FLAGS}
     )
 
 add_executable(openacc_cuda_sample
-    $FORTRAN_SRC
+    ${FORTRAN_SRC}
+    ${CUDA_COMPILED}
 )
-target_link_libraries(openacc_cuda_sample cxx_library)
+target_link_libraries(openacc_cuda_sample stdc++ gcc_eh)

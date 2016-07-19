@@ -39,3 +39,6 @@ if (TARGET_GPU)
 else()
     SET(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -C -Mchkfpstk -Mchkptr -Ktrap=fp -traceback")
 endif()
+
+# https://cmake.org/pipermail/cmake/2010-November/040951.html
+set(CMAKE_SHARED_LIBRARY_LINK_Fortran_FLAGS "-Mcuda")

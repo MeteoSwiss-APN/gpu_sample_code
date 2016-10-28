@@ -18,8 +18,10 @@ PROGRAM main
 
   ! local variables
   INTEGER :: ntstep
+  INTEGER :: mpi_error
   INTEGER, parameter :: itimloop = 5
-  
+
+  CALL MPI_init(mpi_error)
   CALL initialize()
   
   !----------------------------------------------------------------------------
@@ -48,5 +50,7 @@ PROGRAM main
   CALL print_timers()
 
   CALL cleanup()
+
+  CALL MPI_finalize(mpi_error)
 
 END PROGRAM main

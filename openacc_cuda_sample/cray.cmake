@@ -22,3 +22,5 @@ if (TARGET_GPU)
 else()
     set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -O0 -g -eZ -eD -Rb -Rc -Rd -Rp -Rs")
 endif()
+
+set(CMAKE_SHARED_LIBRARY_LINK_Fortran_FLAGS "")

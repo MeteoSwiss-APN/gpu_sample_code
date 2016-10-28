@@ -68,10 +68,10 @@ CONTAINS
     IMPLICIT NONE
 
     ! arguments
-    INTEGER, INTENT(IN)   :: npx, npy, nlev  ! dimension of inputs
-    REAL*8, INTENT(INOUT) :: t(:,:,:)        ! temperature
-    REAL*8, INTENT(IN)    :: qc(:,:,:)       ! cloud water content
-    REAL*8, INTENT(INOUT) :: qv(:,:,:)       ! water vapour content
+    INTEGER, INTENT(IN)   :: npx, npy, nlev         ! dimension of inputs
+    REAL*8, INTENT(INOUT) :: t(npx,npy,nlev)        ! temperature
+    REAL*8, INTENT(IN)    :: qc(npx,npy,nlev)       ! cloud water content
+    REAL*8, INTENT(INOUT) :: qv(npx,npy,nlev)       ! water vapour content
 
     ! local variables
     INTEGER :: i, j, k   ! loop indices

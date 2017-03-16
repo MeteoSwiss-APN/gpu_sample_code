@@ -19,7 +19,12 @@ PROGRAM main
   ! local variables
   INTEGER :: ntstep
   INTEGER, parameter :: itimloop = 5
-  
+
+#ifdef CRAY_WORKAROUND
+  INTEGER :: mpi_error
+ 
+  CALL MPI_init(mpi_error)
+#endif
   CALL initialize()
   
   !----------------------------------------------------------------------------

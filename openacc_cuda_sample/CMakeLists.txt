@@ -16,6 +16,7 @@ set( NVCC_FLAGS "-arch=${CUDA_ARCH}" ) # -Xptxas -abi=no
 set( TARGET_GPU "ON" )
 if("${CMAKE_Fortran_COMPILER_ID}" MATCHES "Cray")
     include(cray.cmake)
+    add_definitions("-DCRAY_WORKAROUND")
 endif()
 if("${CMAKE_Fortran_COMPILER_ID}" MATCHES "PGI")
     include(pgi.cmake)

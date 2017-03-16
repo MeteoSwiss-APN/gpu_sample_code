@@ -54,4 +54,7 @@ PROGRAM main
 
   CALL cleanup()
 
+#ifdef CRAY_WORKAROUND
+  CALL MPI_finalize(mpi_error)
+#endif
 END PROGRAM main

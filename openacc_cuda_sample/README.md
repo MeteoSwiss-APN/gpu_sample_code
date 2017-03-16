@@ -14,23 +14,24 @@ This is a OpenACC and CUDA sample code to verify the setup of a system.
 
         mkdir build
 
-- Configure the build using cmake:
+- Configure the build using cmake. Note: We recommend using gcc and g++ for the C/C++ code.
 
+        export CC=gcc
+        export CXX=g++
         export FC=your_fortran_compiler # PGI: export FC=pgfortran
-        cmake $SRC_DIR
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCUDA_ARCH=sm_60 \
+                -DCUDA_HOST_COMPILER=`which gcc`
 
-- Specify the architecture of your graphics card using ccmake:
-
-        ccmake .
-
-  Adapt the settings:
-
-	    # CMAKE_BUILD_TYPE				   Release
-	    # CUDA_ARCH                        sm_35	# Based on your graphics card. 
-	    											# See https://en.wikipedia.org/wiki/CUDA#GPUs_supported 
-	    											# for your compute capability
-	    # CUDA_HOST_COMPILER               gcc      # We recommend using gcc
-
+        ## Options:
+	    # CMAKE_BUILD_TYPE:   Build type
+	    # CUDA_ARCH:          Cuda architecture, based on your graphics card. 
+	    					  See https://en.wikipedia.org/wiki/CUDA#GPUs_supported 
+                              for your compute capability. If you have PGI installed
+                              you can also use `pgaccelinfo` to obtain the architecture.
+                              Typical values: sm_30, sm_35, sm_50, sm_60
+	    # CUDA_HOST_COMPILER: The host compiler to be used for GCC. We recommend using gcc
 
 - Run make to build it:
 

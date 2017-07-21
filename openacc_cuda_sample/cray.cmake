@@ -12,9 +12,8 @@ endif()
 
 SET(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenACC_FLAGS}")
 
-
-# Release
-SET(CMAKE_Fortran_FLAGS_RELEASE "")
+# Remove "-rdynamic" from the link options
+SET(CMAKE_SHARED_LIBRARY_LINK_Fortran_FLAGS)
 
 # Debug Options (replace default)
 if (TARGET_GPU)

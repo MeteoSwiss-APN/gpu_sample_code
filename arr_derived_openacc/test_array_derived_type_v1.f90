@@ -93,18 +93,18 @@ PROGRAM test_array_derived_pointer
 
       PRINT *, "CPU addresses"
       CALL print_a(C_LOC(all_data(1,1,1)))
-      CALL print_derived(block_ptr(1)%ptr)
-      CALL print_derived(block_ptr(2)%ptr)
+      DO k=1,nk
+        CALL print_derived(block_ptr(k)%ptr)
+      END DO
 
 #ifdef _OPENACC
       PRINT *, "GPU addresses"
-      !$acc data present(all_data)
-      !$acc host_data use_device(all_data, block_ptr(1)%ptr)
+      !$acc host_data use_device(all_data)
       CALL print_a(C_LOC(all_data(1,1,1)))
-      CALL print_derived(block_ptr(1)%ptr)
-      CALL print_derived(block_ptr(2)%ptr)
       !$acc end host_data
-      !$acc end data
+      DO k=1,nk
+        CALL print_derived_acc(block_ptr(k)%ptr)
+      END DO
 #endif
 
       !------------------------------------------
@@ -122,7 +122,7 @@ PROGRAM test_array_derived_pointer
 
       !------------------------------------------
       ! Cleanup
-      !$acc exit data delete(all_data, block_ptr)
+      !$acc exit data delete(all_data, huge_data, block_ptr)
       DEALLOCATE(block_ptr)
       DEALLOCATE(huge_data)
       DEALLOCATE(all_data)
@@ -133,5 +133,14 @@ PROGRAM test_array_derived_pointer
 
       CALL print_a(C_LOC(t(1,1)))
     END SUBROUTINE print_derived
+
+    SUBROUTINE print_derived_acc(t)
+      REAL(kind=dp), POINTER, DIMENSION(:,:), INTENT(IN) :: t
+
+      !$acc host_data use_device(t)
+      CALL print_a(C_LOC(t(1,1)))
+      !$acc end host_data
+
+    END SUBROUTINE print_derived_acc
 
 END PROGRAM test_array_derived_pointer

@@ -1,5 +1,5 @@
 PROGRAM test_array_derived_pointer
-  use iso_c_binding, ONLY:c_loc, c_ptr
+  use, INTRINSIC :: iso_c_binding
 
   IMPLICIT NONE
   integer, parameter :: dp = kind(1.d0)
@@ -93,16 +93,16 @@ PROGRAM test_array_derived_pointer
 
       PRINT *, "CPU addresses"
       CALL print_a(C_LOC(all_data(1,1,1)))
-      CALL print_a(C_LOC(block_ptr(1)%ptr(1,1)))
-      CALL print_a(C_LOC(block_ptr(2)%ptr(1,1)))
+      CALL print_derived(block_ptr(1)%ptr)
+      CALL print_derived(block_ptr(2)%ptr)
 
 #ifdef _OPENACC
       PRINT *, "GPU addresses"
       !$acc data present(all_data)
       !$acc host_data use_device(all_data, block_ptr(1)%ptr)
       CALL print_a(C_LOC(all_data(1,1,1)))
-      CALL print_a(C_LOC(block_ptr(1)%ptr(1,1)))
-      CALL print_a(C_LOC(block_ptr(2)%ptr(1,1)))
+      CALL print_derived(block_ptr(1)%ptr)
+      CALL print_derived(block_ptr(2)%ptr)
       !$acc end host_data
       !$acc end data
 #endif
@@ -127,5 +127,11 @@ PROGRAM test_array_derived_pointer
       DEALLOCATE(huge_data)
       DEALLOCATE(all_data)
     END SUBROUTINE test
+
+    SUBROUTINE print_derived(t)
+      REAL(kind=dp), POINTER, DIMENSION(:,:), INTENT(IN) :: t
+
+      CALL print_a(C_LOC(t(1,1)))
+    END SUBROUTINE print_derived
 
 END PROGRAM test_array_derived_pointer

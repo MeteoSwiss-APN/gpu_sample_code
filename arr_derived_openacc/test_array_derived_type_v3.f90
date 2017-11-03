@@ -15,6 +15,13 @@ PROGRAM test_array_derived_pointer
       END SUBROUTINE print_a
   END INTERFACE
 
+  ! Data for all blocks
+  REAL(kind=dp), DIMENSION(:,:,:), ALLOCATABLE, TARGET  :: all_data
+  ! Huge dataset that should not be on GPU
+  REAL(kind=dp), DIMENSION(:,:,:), ALLOCATABLE, TARGET  :: huge_data
+  ! Access to blocks
+  TYPE(t_ptr), DIMENSION(:), ALLOCATABLE  :: block_ptr
+
   INTEGER :: i, j, k
   INTEGER :: ni, nj, nk
   INTEGER :: hugeNI, hugeNJ, hugeNK
@@ -25,30 +32,37 @@ PROGRAM test_array_derived_pointer
   hugeNJ = 2
   hugeNK = 3
 
-  CALL test()
+  !------------------------------------------
+  ! Initialize data
+  ALLOCATE(all_data(ni,nj,nk))
+  all_data = -999.777_dp
+  !$acc enter data copyin(all_data)
+
+  ALLOCATE(huge_data(hugeNI,hugeNJ,hugeNK))
+  huge_data = 3.141592653589_dp
+  !$acc enter data copyin(huge_data)
+
+  ALLOCATE(block_ptr(nk))
+
+  CALL test(all_data, huge_data, block_ptr)
+
+  !------------------------------------------
+  ! Cleanup
+  !$acc exit data delete(all_data)
+  DEALLOCATE(block_ptr)
+  DEALLOCATE(huge_data)
+  DEALLOCATE(all_data)
 
   CONTAINS
-    SUBROUTINE test
+    SUBROUTINE test(all_data, huge_data, block_ptr)
       IMPLICIT NONE
 
       ! Data for all blocks
-      REAL(kind=dp), DIMENSION(:,:,:), ALLOCATABLE, TARGET  :: all_data
+      REAL(kind=dp), DIMENSION(:,:,:), INTENT(INOUT), TARGET  :: all_data
       ! Huge dataset that should not be on GPU
-      REAL(kind=dp), DIMENSION(:,:,:), ALLOCATABLE, TARGET  :: huge_data
+      REAL(kind=dp), DIMENSION(:,:,:), INTENT(INOUT), TARGET  :: huge_data
       ! Access to blocks
-      TYPE(t_ptr), DIMENSION(:), ALLOCATABLE  :: block_ptr
-
-      !------------------------------------------
-      ! Initialize data
-      ALLOCATE(all_data(ni,nj,nk))
-      all_data = -999.777_dp
-      !$acc enter data copyin(all_data)
-
-      ALLOCATE(huge_data(hugeNI,hugeNJ,hugeNK))
-      huge_data = 3.141592653589_dp
-      !$acc enter data copyin(huge_data)
-
-      ALLOCATE(block_ptr(nk))
+      TYPE(t_ptr), DIMENSION(:), INTENT(INOUT) :: block_ptr
 
 #ifdef _OPENACC
       !------------------------------------------
@@ -113,13 +127,6 @@ PROGRAM test_array_derived_pointer
       PRINT *, " ---- GPU all_data:"
       PRINT *,all_data
 #endif
-
-      !------------------------------------------
-      ! Cleanup
-      !$acc exit data delete(all_data)
-      DEALLOCATE(block_ptr)
-      DEALLOCATE(huge_data)
-      DEALLOCATE(all_data)
     END SUBROUTINE test
 
     SUBROUTINE print_derived(t)

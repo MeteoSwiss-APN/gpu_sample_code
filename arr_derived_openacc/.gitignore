@@ -1,0 +1,8 @@
+*.i
+*.o
+*.cub
+*.ptx
+out
+test_v1_*
+test_v2_*
+test_v3_*

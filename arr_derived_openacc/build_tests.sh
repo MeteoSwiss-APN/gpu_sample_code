@@ -20,7 +20,7 @@ for v in {1..5};do
     echo "               BUILD: FAILED"
   fi
   if [ ! -z "${FCACC}" ]; then
-    echo "     ---------------- GPU ---------------- "
+    echo "       ---------------- GPU ---------------- "
     echo " "
     rm -f test_v${v}_${COMPILER}_gpu
     #set -x

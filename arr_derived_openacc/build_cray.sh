@@ -10,6 +10,15 @@ case $HOSTNAME in
     echo "CRAY is not available on $HOSTNAME"
     exit 0
     ;;
+  keschcn*)
+    module purge
+    module load craype-haswell craype-accel-nvidia35 PrgEnv-cray
+    CPP="CC -O2 -c"
+    FC="ftn -O2 -eZ -ffree -N255 -en -hnoacc"
+    FCACC="ftn -O2 -eZ -ffree -N255 -en -hacc"
+    LDFLAG="-lstdc++ print_a.o"
+    ftn -V
+    ;;
   kesch*)
     module purge
     module load git/2.8.4 craype-haswell craype-accel-nvidia35 PrgEnv-cray

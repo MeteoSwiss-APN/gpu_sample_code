@@ -3,11 +3,16 @@
 #SBATCH -t 00:05:00
 #SBATCH --partition=debug
 
-COMPILER="pgi"
+COMPILER="cray"
 
 if [ ${COMPILER} == "pgi" ]; then
   echo "Running PGI CPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell pgi
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-pgi
@@ -25,6 +30,11 @@ if [ ${COMPILER} == "pgi" ]; then
 elif [ ${COMPILER} == "gnu" ]; then
   echo "Running GNU CPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell PrgEnv-gnu
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-gnu
@@ -43,6 +53,11 @@ elif [ ${COMPILER} == "gnu" ]; then
 else
   echo "Running CRAY CPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell PrgEnv-cray
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-cray

@@ -17,6 +17,15 @@ case $HOSTNAME in
     LDFLAG="-lstdc++ print_a.o"
     pgf90 --version
     ;;
+  keschcn*)
+    module purge
+    module load craype-haswell craype-accel-nvidia35 pgi
+    CPP="pgc++ -g -O2 -c"
+    FC="pgf90 -g -Mpreprocess -O2 -Minfo"
+    FCACC="${FC} -acc=verystrict -ta=tesla:cc35"
+    LDFLAG="-lstdc++ print_a.o"
+    pgf90 --version
+    ;;
   kesch*)
     module purge
     module load craype-haswell craype-accel-nvidia35 PrgEnv-pgi

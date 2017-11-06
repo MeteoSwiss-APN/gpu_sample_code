@@ -4,11 +4,16 @@
 #SBATCH --gres=gpu:1
 #SBATCH --partition=debug
 
-COMPILER="pgi"
+COMPILER="cray"
 
 if [ ${COMPILER} == "pgi" ]; then
   echo "Running PGI GPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell craype-accel-nvidia35 pgi
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell craype-accel-nvidia35 PrgEnv-pgi
@@ -27,6 +32,11 @@ if [ ${COMPILER} == "pgi" ]; then
 elif [ ${COMPILER} == "gnu" ]; then
   echo "Running GNU GPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell PrgEnv-gnu
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-gnu
@@ -46,6 +56,11 @@ elif [ ${COMPILER} == "gnu" ]; then
 else
   echo "Running CRAY GPU tests"
   case $HOSTNAME in
+    keschcn*)
+      module purge
+      module load craype-haswell craype-accel-nvidia35 PrgEnv-cray
+      RUNCMD=""
+      ;;
     kesch*)
       module purge
       module load craype-haswell craype-accel-nvidia35 PrgEnv-cray

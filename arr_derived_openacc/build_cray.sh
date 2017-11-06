@@ -19,6 +19,7 @@ case $HOSTNAME in
     LDFLAG="-lstdc++ print_a.o"
     ;;
   daint*)
+    module load daint-gpu
     module load craype-accel-nvidia60
     CPP="CC -O2 -c"
     FC="ftn -O2 -eZ -ffree -N255 -hnoacc"

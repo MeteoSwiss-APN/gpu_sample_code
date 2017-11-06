@@ -25,8 +25,11 @@ case $HOSTNAME in
     LDFLAG="-lstdc++ print_a.o"
     ;;
   daint*)
-    CPP="pgc++ -g -O2 -c"
-    FC="pgf90 -g -Mpreprocess -O2 -Minfo"
+    module load daint-gpu
+    module switch PrgEnv-cray PrgEnv-pgi
+    module load craype-accel-nvidia60
+    CPP="CC -g -O2 -c"
+    FC="ftn -g -Mpreprocess -O2 -Minfo"
     FCACC="${FC} -acc=verystrict -ta=tesla:cc60"
     LDFLAG="-lstdc++ print_a.o"
     ;;

@@ -21,13 +21,18 @@ case $HOSTNAME in
     LDFLAG="-lstdc++ print_a.o"
     ;;
   daint*)
-    CPP="g++ -O2 -c"
-    FC="gfortran -O2 -cpp"
-    FCACC=""
+    module load daint-gpu
+    module switch PrgEnv-cray PrgEnv-gnu
+    module switch gcc/5.3.0 gcc/7.1.0
+    module load craype-accel-nvidia60
+    CPP="CC -O2 -c"
+    FC="ftn -O2 -cpp"
+    FCACC="ftn -O2 -fopenacc -cpp"
     LDFLAG="-lstdc++ print_a.o"
     ;;
 esac
 
+ftn --version
 export COMPILER
 export CPP
 export FC

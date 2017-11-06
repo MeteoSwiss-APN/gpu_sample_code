@@ -11,6 +11,7 @@ case $HOSTNAME in
     FC="gfortran -O2 -cpp"
     FCACC=""
     LDFLAG="-lstdc++ print_a.o"
+    gfortran --version
     ;;
   kesch*)
     module purge
@@ -19,6 +20,7 @@ case $HOSTNAME in
     FC="gfortran -O2 -cpp"
     FCACC=""
     LDFLAG="-lstdc++ print_a.o"
+    gfortran --version
     ;;
   daint*)
     module load daint-gpu
@@ -29,16 +31,17 @@ case $HOSTNAME in
     FC="ftn -O2 -cpp"
     FCACC="ftn -O2 -fopenacc -cpp"
     LDFLAG="-lstdc++ print_a.o"
+    ftn --version
     ;;
 esac
 
-ftn --version
 export COMPILER
 export CPP
 export FC
 export FCACC
 export LDFLAG
 
+echo " "
 echo "Building GNU tests on $HOSTNAME"
 
 bash ./build_tests.sh

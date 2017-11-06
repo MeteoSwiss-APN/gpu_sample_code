@@ -15,6 +15,7 @@ case $HOSTNAME in
     FC="pgf90 -g -Mpreprocess -O2 -Minfo"
     FCACC="${FC} -acc=verystrict -ta=tesla:cc20"
     LDFLAG="-lstdc++ print_a.o"
+    pgf90 --version
     ;;
   kesch*)
     module purge
@@ -23,6 +24,7 @@ case $HOSTNAME in
     FC="pgf90 -g -Mpreprocess -O2 -Minfo"
     FCACC="${FC} -acc=verystrict -ta=tesla:cc35"
     LDFLAG="-lstdc++ print_a.o"
+    pgf90 --version
     ;;
   daint*)
     module load daint-gpu
@@ -32,6 +34,7 @@ case $HOSTNAME in
     FC="ftn -g -Mpreprocess -O2 -Minfo"
     FCACC="${FC} -acc=verystrict -ta=tesla:cc60"
     LDFLAG="-lstdc++ print_a.o"
+    ftn --version
     ;;
 esac
 
@@ -41,6 +44,7 @@ export FC
 export FCACC
 export LDFLAG
 
+echo " "
 echo "Building PGI tests on $HOSTNAME"
 
 bash ./build_tests.sh

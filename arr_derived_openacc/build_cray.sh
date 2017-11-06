@@ -17,6 +17,7 @@ case $HOSTNAME in
     FC="ftn -O2 -eZ -ffree -N255 -en -hnoacc"
     FCACC="ftn -O2 -eZ -ffree -N255 -en -hacc"
     LDFLAG="-lstdc++ print_a.o"
+    ftn -V
     ;;
   daint*)
     module load daint-gpu
@@ -25,6 +26,7 @@ case $HOSTNAME in
     FC="ftn -O2 -eZ -ffree -N255 -hnoacc"
     FCACC="ftn -O2 -eZ -ffree -N255 -hacc"
     LDFLAG="-lstdc++ print_a.o"
+    ftn -V
     ;;
 esac
 
@@ -34,6 +36,7 @@ export FC
 export FCACC
 export LDFLAG
 
+echo " "
 echo "Building CRAY tests on $HOSTNAME"
 
 bash ./build_tests.sh

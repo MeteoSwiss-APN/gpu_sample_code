@@ -171,6 +171,7 @@ PROGRAM test_array_derived_pointer
       END IF
     END SUBROUTINE test
 
+#ifdef DEBUG
     SUBROUTINE print_derived(t)
       REAL(kind=dp), POINTER, DIMENSION(:,:), INTENT(IN) :: t
 
@@ -185,5 +186,6 @@ PROGRAM test_array_derived_pointer
       !$acc end host_data
 
     END SUBROUTINE print_derived_acc
+#endif
 
 END PROGRAM test_array_derived_pointer

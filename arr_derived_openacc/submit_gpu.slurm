@@ -3,8 +3,6 @@
 #SBATCH -t 00:05:00
 #SBATCH --gres=gpu:1
 #SBATCH --partition=debug
-#SBATCH -C gpu
-#SBATCH --account=c15
 
 COMPILER="pgi"
 

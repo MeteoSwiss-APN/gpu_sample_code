@@ -37,6 +37,8 @@ PROGRAM test_array_derived_pointer
       REAL(kind=dp), DIMENSION(:,:,:), ALLOCATABLE, TARGET  :: huge_data
       ! Access to blocks
       TYPE(t_ptr), DIMENSION(:), ALLOCATABLE  :: block_ptr
+      ! Temporary to check computation
+      REAL(kind=dp) :: check
 
       !------------------------------------------
       ! Initialize data
@@ -108,16 +110,34 @@ PROGRAM test_array_derived_pointer
 
       !------------------------------------------
       ! Print host data
-      PRINT *, " ---- CPU all_data:"
-      PRINT *,all_data
+      !PRINT *, " ---- CPU all_data:"
+      !PRINT *,all_data
 
+      !$acc update host(all_data)
 #ifdef _OPENACC
       !------------------------------------------
       ! Print GPU data
-      !$acc update host(all_data)
-      PRINT *, " ---- GPU all_data:"
-      PRINT *,all_data
+      !PRINT *, " ---- GPU all_data:"
+      !PRINT *,all_data
 #endif
+
+      !------------------------------------------
+      ! Check computation
+      check = 0.0_dp
+      DO k=1, nk
+        DO i=1,ni
+          check = check + (all_data(i,1,k) - 13.0_dp)
+        END DO
+        DO j=2, nj
+          DO i=1,ni
+#ifdef _OPENACC
+            check = check + (all_data(i,j,k) - 777.999_dp)
+#else
+            check = check + (all_data(i,j,k) + 999.777_dp)
+#endif
+          END DO
+        END DO
+      END DO
 
       !------------------------------------------
       ! Cleanup
@@ -126,6 +146,12 @@ PROGRAM test_array_derived_pointer
       DEALLOCATE(block_ptr)
       DEALLOCATE(huge_data)
       DEALLOCATE(all_data)
+
+      IF (check .EQ. 0.0_dp) THEN
+        PRINT *, "RUN: SUCCESS"
+      ELSE
+        PRINT *, "RUN: FAILED"
+      END IF
     END SUBROUTINE test
 
     SUBROUTINE print_derived(t)

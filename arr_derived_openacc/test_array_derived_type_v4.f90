@@ -50,6 +50,7 @@ PROGRAM test_array_derived_pointer
       !$acc enter data copyin(huge_data)
 
       ALLOCATE(block_ptr(nk))
+      !$acc enter data create(block_ptr)
 
 #ifdef _OPENACC
       !------------------------------------------
@@ -77,7 +78,7 @@ PROGRAM test_array_derived_pointer
       END DO
 
       PRINT *, "SET VALUES THROUGH POINTERS"
-      !$acc data
+      !$acc data present(block_ptr(1)%ptr,block_ptr(2)%ptr,block_ptr(3)%ptr)
       !$acc parallel 
       !$acc loop gang
       DO k = 1, nk

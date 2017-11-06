@@ -3,6 +3,6 @@
 
 void print_a(double* addr)
 {
-  std::cout<< "out: "<< addr << std::endl;
+  std::cout<< "address: "<< addr << std::endl;
 }
 

@@ -50,6 +50,7 @@ PROGRAM test_array_derived_pointer
       !$acc enter data copyin(huge_data)
 
       ALLOCATE(block_ptr(nk))
+      !$acc enter data create(block_ptr)
 
 #ifdef _OPENACC
       !------------------------------------------
@@ -77,17 +78,16 @@ PROGRAM test_array_derived_pointer
       END DO
 
       PRINT *, "SET VALUES THROUGH POINTERS"
-      !$acc data
-      !$acc parallel 
-      !$acc loop gang
       DO k = 1, nk
-        !$acc loop vector
+        !$acc data present(block_ptr(k)%ptr)
+        !$acc parallel 
+        !$acc loop gang vector
           DO i = 1, ni
             block_ptr(k)%ptr(i,1) = 13.0_dp
           END DO
+        !$acc end parallel
+        !$acc end data
       END DO
-      !$acc end parallel
-      !$acc end data
 
       PRINT *, "CPU addresses"
       CALL print_a(C_LOC(all_data(1,1,1)))

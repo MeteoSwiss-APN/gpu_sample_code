@@ -36,3 +36,13 @@ rm print_a.o
 ${CPP} print_a.cpp
 rm test_v3_gnu_cpu
 ${FC} -o test_v3_gnu_cpu test_array_derived_type_v3.f90 ${LDFLAG}
+
+rm print_a.o
+${CPP} print_a.cpp
+rm test_v4_gnu_cpu
+${FC} -o test_v4_gnu_cpu test_array_derived_type_v4.f90 ${LDFLAG}
+
+rm print_a.o
+${CPP} print_a.cpp
+rm test_v5_gnu_cpu
+${FC} -o test_v5_gnu_cpu test_array_derived_type_v5.f90 ${LDFLAG}

@@ -40,6 +40,7 @@ PROGRAM test_array_derived_pointer
 
       !------------------------------------------
       ! Initialize data
+      PRINT *,"INITIALIZE CPU MEMORY"
       ALLOCATE(all_data(ni,nj,nk))
       all_data = -999.777_dp
       !$acc enter data copyin(all_data)
@@ -54,6 +55,7 @@ PROGRAM test_array_derived_pointer
 #ifdef _OPENACC
       !------------------------------------------
       ! Initialize GPU data with different value
+      PRINT *,"INITIALIZE GPU MEMORY"
       !$acc data present(all_data)
       !$acc parallel
         !$acc loop gang vector collapse(3)
@@ -70,6 +72,7 @@ PROGRAM test_array_derived_pointer
 
       !------------------------------------------
       ! Assign pointers to blocks in all_data
+      PRINT *,"ASSIGN POINTERS ON GPU"
       !$acc data present(all_data, block_ptr)
       !$acc parallel 
       !$acc loop gang
@@ -79,6 +82,7 @@ PROGRAM test_array_derived_pointer
       !$acc end parallel
       !$acc end data
 
+      PRINT *, "SET VALUES THROUGH POINTERS"
       !$acc data present(block_ptr)
       !$acc parallel 
       !$acc loop gang
@@ -122,6 +126,7 @@ PROGRAM test_array_derived_pointer
 
       !------------------------------------------
       ! Cleanup
+      PRINT *, "CLEANUP"
       !$acc exit data delete(all_data, huge_data, block_ptr)
       DEALLOCATE(block_ptr)
       DEALLOCATE(huge_data)

@@ -43,3 +43,17 @@ rm test_v3_cray_cpu
 ${FC} -o test_v3_cray_cpu test_array_derived_type_v3.f90 ${LDFLAG}
 rm test_v3_cray_gpu
 ${FCACC} -o test_v3_cray_gpu test_array_derived_type_v3.f90 ${LDFLAG}
+
+rm print_a.o
+${CPP} print_a.cpp
+rm test_v4_cray_cpu
+${FC} -o test_v4_cray_cpu test_array_derived_type_v4.f90 ${LDFLAG}
+rm test_v4_cray_gpu
+${FCACC} -o test_v4_cray_gpu test_array_derived_type_v4.f90 ${LDFLAG}
+
+rm print_a.o
+${CPP} print_a.cpp
+rm test_v5_cray_cpu
+${FC} -o test_v5_cray_cpu test_array_derived_type_v5.f90 ${LDFLAG}
+rm test_v5_cray_gpu
+${FCACC} -o test_v5_cray_gpu test_array_derived_type_v5.f90 ${LDFLAG}

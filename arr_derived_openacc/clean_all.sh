@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rm *.build
-rm *.o
-rm test_v*
-rm *.i
-rm *.ptx
-rm *.cub
+rm -f *.build
+rm -f *.o
+rm -f test_v*
+rm -f *.i
+rm -f *.ptx
+rm -f *.cub

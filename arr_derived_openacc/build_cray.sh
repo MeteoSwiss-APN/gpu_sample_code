@@ -4,6 +4,7 @@ echo " "
 echo " ######################### BUILDING WITH CRAY #########################  "
 echo " "
 
+COMPILER="cray"
 case $HOSTNAME in
   lothlorien*)
     echo "CRAY is not available on $HOSTNAME"
@@ -26,6 +27,7 @@ case $HOSTNAME in
     ;;
 esac
 
+export COMPILER
 export CPP
 export FC
 export FCACC

@@ -4,6 +4,7 @@ echo " "
 echo " ######################### BUILDING WITH GNU #########################  "
 echo " "
 
+COMPILER="gnu"
 case $HOSTNAME in
   lothlorien*)
     CPP="g++ -O2 -c"
@@ -27,6 +28,7 @@ case $HOSTNAME in
     ;;
 esac
 
+export COMPILER
 export CPP
 export FC
 export FCACC

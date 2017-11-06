@@ -4,6 +4,7 @@ echo " "
 echo " ######################### BUILDING WITH PGI #########################  "
 echo " "
 
+COMPILER="pgi"
 case $HOSTNAME in
   lothlorien*)
     export PGI=/usr/local/share/pgi
@@ -31,6 +32,7 @@ case $HOSTNAME in
     ;;
 esac
 
+export COMPILER
 export CPP
 export FC
 export FCACC

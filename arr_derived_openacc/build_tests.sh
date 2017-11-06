@@ -10,26 +10,26 @@ for v in {1..5};do
   echo " "
   echo "       ---------------- CPU ---------------- "
   echo " "
-  rm -f test_v${v}_cray_cpu
+  rm -f test_v${v}_${COMPILER}_cpu
   set -x
-  ${FC} -o test_v${v}_cray_cpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_cray_cpu.build
+  ${FC} -o test_v${v}_${COMPILER}_cpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_${COMPILER}_cpu.build
   set +x
-  if [ -f test_v${v}_cray_cpu ];then
-    echo "                      SUCCESS"
+  if [ -f test_v${v}_${COMPILER}_cpu ];then
+    echo "               BUILD: SUCCESS"
   else
-    echo "                      FAILED"
+    echo "               BUILD: FAILED"
   fi
   if [ ! -z "${FCACC}" ]; then
     echo "     ---------------- GPU ---------------- "
     echo " "
-    rm -f test_v${v}_cray_gpu
+    rm -f test_v${v}_${COMPILER}_gpu
     set -x
-    ${FCACC} -o test_v${v}_cray_gpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_cray_gpu.build
+    ${FCACC} -o test_v${v}_${COMPILER}_gpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_${COMPILER}_gpu.build
     set +x
-    if [ -f test_v${v}_cray_gpu ];then
-      echo "                      SUCCESS"
+    if [ -f test_v${v}_${COMPILER}_gpu ];then
+      echo "               BUILD: SUCCESS"
     else
-      echo "                      FAILED"
+      echo "               BUILD: FAILED"
     fi
   fi
 done

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo " "
+echo " ######################### BUILDING WITH GNU #########################  "
+echo " "
+
 case $HOSTNAME in
   lothlorien*)
     CPP="g++ -O2 -c"

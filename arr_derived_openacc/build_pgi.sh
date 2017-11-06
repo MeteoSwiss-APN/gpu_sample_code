@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo " "
+echo " ######################### BUILDING WITH PGI #########################  "
+echo " "
+
 case $HOSTNAME in
   lothlorien*)
     export PGI=/usr/local/share/pgi
@@ -34,4 +38,4 @@ export LDFLAG
 
 echo "Building PGI tests on $HOSTNAME"
 
-exec ./build_tests.sh
+bash ./build_tests.sh

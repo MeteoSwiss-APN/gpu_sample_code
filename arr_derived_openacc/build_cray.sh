@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo " "
+echo " ######################### BUILDING WITH CRAY #########################  "
+echo " "
+
 case $HOSTNAME in
   lothlorien*)
     echo "CRAY is not available on $HOSTNAME"

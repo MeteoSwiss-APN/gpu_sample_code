@@ -8,9 +8,12 @@ COMPILER="pgi"
 case $HOSTNAME in
   lothlorien*)
     export PGI=/usr/local/share/pgi
-    export PATH=$PGI/linux86-64/17.4/bin/:$PATH
-    export MANPATH=$PGI/linux86-64/17.4/man/:$MANPATH
-    export LD_LIBRARY_PATH=$PGI/linux86-64/17.4/lib/:$LD_LIBRARY_PATH
+    #export PATH=$PGI/linux86-64/17.4/bin/:$PATH
+    #export MANPATH=$PGI/linux86-64/17.4/man/:$MANPATH
+    #export LD_LIBRARY_PATH=$PGI/linux86-64/17.4/lib/:$LD_LIBRARY_PATH
+    export PATH=$PGI/linux86-64/17.10/bin/:$PATH
+    export MANPATH=$PGI/linux86-64/17.10/man/:$MANPATH
+    export LD_LIBRARY_PATH=$PGI/linux86-64/17.10/lib/:$LD_LIBRARY_PATH
     CPP="pgc++ -g -O2 -c"
     FC="pgf90 -g -Mpreprocess -O2 -Minfo"
     FCACC="${FC} -acc=verystrict -ta=tesla:cc20"

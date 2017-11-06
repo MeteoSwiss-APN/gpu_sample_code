@@ -1,92 +1,35 @@
 #!/bin/bash
 
 rm -f print_a.o
-set -x
+#set -x
 ${CPP} print_a.cpp
-set +x
+#set +x
 
-echo " --------------------------------------- TEST V1 --------------------------------------- "
-echo " "
-echo "                ------------------------ CPU ------------------------ "
-echo " "
-rm -f test_v1_cray_cpu
-set -x
-${FC} -o test_v1_cray_cpu test_array_derived_type_v1.f90 ${LDFLAG}
-set +x
-if [ ! -z "${FCACC}" ]; then
-  echo "                ------------------------ GPU ------------------------ "
+for v in {1..5};do
+  echo " --------------------- TEST V${v} ----------------------- "
   echo " "
-  rm -f test_v1_cray_gpu
-  set -x
-  ${FCACC} -o test_v1_cray_gpu test_array_derived_type_v1.f90 ${LDFLAG}
-  set +x
-fi
-
-echo " --------------------------------------- TEST V2 --------------------------------------- "
-echo " "
-echo "                ------------------------ CPU ------------------------ "
-echo " "
-rm -f test_v2_cray_cpu
-set -x
-${FC} -o test_v2_cray_cpu test_array_derived_type_v2.f90 ${LDFLAG}
-set +x
-if [ ! -z "${FCACC}" ]; then
-  echo "                ------------------------ GPU ------------------------ "
+  echo "       ---------------- CPU ---------------- "
   echo " "
-  rm -f test_v2_cray_gpu
+  rm -f test_v${v}_cray_cpu
   set -x
-  ${FCACC} -o test_v2_cray_gpu test_array_derived_type_v2.f90 ${LDFLAG}
+  ${FC} -o test_v${v}_cray_cpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_cray_cpu.build
   set +x
-fi
-
-echo " --------------------------------------- TEST V3 --------------------------------------- "
-echo " "
-echo "                ------------------------ CPU ------------------------ "
-echo " "
-rm -f test_v3_cray_cpu
-set -x
-${FC} -o test_v3_cray_cpu test_array_derived_type_v3.f90 ${LDFLAG}
-set +x
-if [ ! -z "${FCACC}" ]; then
-  echo "                ------------------------ GPU ------------------------ "
-  echo " "
-  rm -f test_v3_cray_gpu
-  set -x
-  ${FCACC} -o test_v3_cray_gpu test_array_derived_type_v3.f90 ${LDFLAG}
-  set +x
-fi
-
-echo " --------------------------------------- TEST V4 --------------------------------------- "
-echo " "
-echo "                ------------------------ CPU ------------------------ "
-echo " "
-rm -f test_v4_cray_cpu
-set -x
-${FC} -o test_v4_cray_cpu test_array_derived_type_v4.f90 ${LDFLAG}
-set +x
-if [ ! -z "${FCACC}" ]; then
-  echo "                ------------------------ GPU ------------------------ "
-  echo " "
-  rm -f test_v4_cray_gpu
-  set -x
-  ${FCACC} -o test_v4_cray_gpu test_array_derived_type_v4.f90 ${LDFLAG}
-  set +x
-fi
-
-echo " --------------------------------------- TEST V5 --------------------------------------- "
-echo " "
-echo "                ------------------------ CPU ------------------------ "
-echo " "
-rm -f test_v5_cray_cpu
-set -x
-${FC} -o test_v5_cray_cpu test_array_derived_type_v5.f90 ${LDFLAG}
-set +x
-if [ ! -z "${FCACC}" ]; then
-  echo "                ------------------------ GPU ------------------------ "
-  echo " "
-  rm -f test_v5_cray_gpu
-  set -x
-  ${FCACC} -o test_v5_cray_gpu test_array_derived_type_v5.f90 ${LDFLAG}
-  set +x
-fi
-
+  if [ -f test_v${v}_cray_cpu ];then
+    echo "                      SUCCESS"
+  else
+    echo "                      FAILED"
+  fi
+  if [ ! -z "${FCACC}" ]; then
+    echo "     ---------------- GPU ---------------- "
+    echo " "
+    rm -f test_v${v}_cray_gpu
+    set -x
+    ${FCACC} -o test_v${v}_cray_gpu test_array_derived_type_v${v}.f90 ${LDFLAG} >& test_v${v}_cray_gpu.build
+    set +x
+    if [ -f test_v${v}_cray_gpu ];then
+      echo "                      SUCCESS"
+    else
+      echo "                      FAILED"
+    fi
+  fi
+done

@@ -3,6 +3,4 @@
 *.cub
 *.ptx
 out
-test_v1_*
-test_v2_*
-test_v3_*
+test_v*

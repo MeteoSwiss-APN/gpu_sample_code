@@ -14,6 +14,7 @@ case $HOSTNAME in
     LDFLAG="-lstdc++ print_a.o"
     ;;
   daint*)
+    module load craype-accel-nvidia60
     CPP="CC -O2 -c"
     FC="ftn -O2 -eZ -ffree -N255 -hnoacc"
     FCACC="ftn -O2 -eZ -ffree -N255 -hacc"
@@ -21,39 +22,11 @@ case $HOSTNAME in
     ;;
 esac
 
+export CPP
+export FC
+export FCACC
+export LDFLAG
+
 echo "Building CRAY tests on $HOSTNAME"
 
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v1_cray_cpu
-${FC} -o test_v1_cray_cpu test_array_derived_type_v1.f90 ${LDFLAG}
-rm test_v1_cray_gpu
-${FCACC} -o test_v1_cray_gpu test_array_derived_type_v1.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v2_cray_cpu
-${FC} -o test_v2_cray_cpu test_array_derived_type_v2.f90 ${LDFLAG}
-rm test_v2_cray_gpu
-${FCACC} -o test_v2_cray_gpu test_array_derived_type_v2.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v3_cray_cpu
-${FC} -o test_v3_cray_cpu test_array_derived_type_v3.f90 ${LDFLAG}
-rm test_v3_cray_gpu
-${FCACC} -o test_v3_cray_gpu test_array_derived_type_v3.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v4_cray_cpu
-${FC} -o test_v4_cray_cpu test_array_derived_type_v4.f90 ${LDFLAG}
-rm test_v4_cray_gpu
-${FCACC} -o test_v4_cray_gpu test_array_derived_type_v4.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v5_cray_cpu
-${FC} -o test_v5_cray_cpu test_array_derived_type_v5.f90 ${LDFLAG}
-rm test_v5_cray_gpu
-${FCACC} -o test_v5_cray_gpu test_array_derived_type_v5.f90 ${LDFLAG}
+bash ./build_tests.sh

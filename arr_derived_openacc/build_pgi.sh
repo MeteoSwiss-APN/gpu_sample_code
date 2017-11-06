@@ -27,39 +27,11 @@ case $HOSTNAME in
     ;;
 esac
 
+export CPP
+export FC
+export FCACC
+export LDFLAG
+
 echo "Building PGI tests on $HOSTNAME"
 
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v1_pgi_cpu
-${FC} -o test_v1_pgi_cpu test_array_derived_type_v1.f90 ${LDFLAG}
-rm test_v1_pgi_gpu
-${FCACC} -o test_v1_pgi_gpu test_array_derived_type_v1.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v2_pgi_cpu
-${FC} -o test_v2_pgi_cpu test_array_derived_type_v2.f90 ${LDFLAG}
-rm test_v2_pgi_gpu
-${FCACC} -o test_v2_pgi_gpu test_array_derived_type_v2.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v3_pgi_cpu
-${FC} -o test_v3_pgi_cpu test_array_derived_type_v3.f90 ${LDFLAG}
-rm test_v3_pgi_gpu
-${FCACC} -o test_v3_pgi_gpu test_array_derived_type_v3.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v4_pgi_cpu
-${FC} -o test_v4_pgi_cpu test_array_derived_type_v4.f90 ${LDFLAG}
-rm test_v4_pgi_gpu
-${FCACC} -o test_v4_pgi_gpu test_array_derived_type_v4.f90 ${LDFLAG}
-
-rm print_a.o
-${CPP} print_a.cpp
-rm test_v5_pgi_cpu
-${FC} -o test_v5_pgi_cpu test_array_derived_type_v5.f90 ${LDFLAG}
-rm test_v5_pgi_gpu
-${FCACC} -o test_v5_pgi_gpu test_array_derived_type_v5.f90 ${LDFLAG}
+exec ./build_tests.sh

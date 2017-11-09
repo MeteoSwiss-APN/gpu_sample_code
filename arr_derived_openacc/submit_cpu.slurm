@@ -11,7 +11,7 @@ if [ ${COMPILER} == "pgi" ]; then
     keschcn*)
       module purge
       module load craype-haswell pgi
-      RUNCMD=""
+      RUNCMD="srun"
       ;;
     kesch*)
       module purge
@@ -30,11 +30,6 @@ if [ ${COMPILER} == "pgi" ]; then
 elif [ ${COMPILER} == "gnu" ]; then
   echo "Running GNU CPU tests"
   case $HOSTNAME in
-    keschcn*)
-      module purge
-      module load craype-haswell PrgEnv-gnu
-      RUNCMD=""
-      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-gnu
@@ -53,11 +48,6 @@ elif [ ${COMPILER} == "gnu" ]; then
 else
   echo "Running CRAY CPU tests"
   case $HOSTNAME in
-    keschcn*)
-      module purge
-      module load craype-haswell PrgEnv-cray
-      RUNCMD=""
-      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-cray

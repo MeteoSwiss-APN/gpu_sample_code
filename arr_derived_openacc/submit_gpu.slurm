@@ -12,7 +12,7 @@ if [ ${COMPILER} == "pgi" ]; then
     keschcn*)
       module purge
       module load craype-haswell craype-accel-nvidia35 pgi
-      RUNCMD=""
+      RUNCMD="srun"
       ;;
     kesch*)
       module purge
@@ -32,11 +32,6 @@ if [ ${COMPILER} == "pgi" ]; then
 elif [ ${COMPILER} == "gnu" ]; then
   echo "Running GNU GPU tests"
   case $HOSTNAME in
-    keschcn*)
-      module purge
-      module load craype-haswell PrgEnv-gnu
-      RUNCMD=""
-      ;;
     kesch*)
       module purge
       module load craype-haswell PrgEnv-gnu
@@ -56,11 +51,6 @@ elif [ ${COMPILER} == "gnu" ]; then
 else
   echo "Running CRAY GPU tests"
   case $HOSTNAME in
-    keschcn*)
-      module purge
-      module load craype-haswell craype-accel-nvidia35 PrgEnv-cray
-      RUNCMD=""
-      ;;
     kesch*)
       module purge
       module load craype-haswell craype-accel-nvidia35 PrgEnv-cray

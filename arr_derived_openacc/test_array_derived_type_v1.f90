@@ -5,7 +5,7 @@ PROGRAM test_array_derived_pointer
   integer, parameter :: dp = kind(1.d0)
   TYPE t_ptr
     REAL(kind=dp), POINTER  :: ptr(:,:)
-    REAL(kind=dp), POINTER :: huge_ptr(:,:)
+    REAL(kind=dp), POINTER :: huge_ptr(:,:) ! This data should not be on GPU
     INTEGER           :: idx
   END TYPE t_ptr
   INTERFACE

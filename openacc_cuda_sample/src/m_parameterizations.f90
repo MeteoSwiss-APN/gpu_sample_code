@@ -4,7 +4,7 @@
 ! module containing the physical parameterizations
 MODULE m_parameterizations
 
-  USE iso_c_binding, ONLY: C_LOC
+  USE iso_c_binding, ONLY: C_LOC, C_DOUBLE
 
   IMPLICIT NONE
 
@@ -25,9 +25,9 @@ CONTAINS
 
     ! arguments
     INTEGER, INTENT(IN)    :: npx, npy, nlev  ! dimensions of inputs
-    REAL*8,  INTENT(IN)    :: t(:,:,:)        ! temperature
-    REAL*8,  INTENT(OUT)   :: qc(:,:,:)       ! cloud water content
-    REAL*8,  INTENT(INOUT) :: qv(:,:,:)       ! water vapour content
+    REAL*8,  INTENT(IN), TARGET    :: t(:,:,:)        ! temperature
+    REAL*8,  INTENT(OUT), TARGET   :: qc(:,:,:)       ! cloud water content
+    REAL*8,  INTENT(INOUT), TARGET :: qv(:,:,:)       ! water vapour content
 
     ! Interface to CUDA wrapper function using iso_c_binding
     INTERFACE
@@ -37,7 +37,7 @@ CONTAINS
            BIND(c, name='saturation_adjustment_cuda')
         USE, INTRINSIC :: iso_c_binding
         INTEGER(C_INT), VALUE      :: ntot
-        TYPE(C_PTR), VALUE         :: t, qc, qv
+        TYPE(C_PTR), VALUE, TARGET :: t, qc, qv
         REAL(KIND=C_DOUBLE), VALUE :: cs1, cs2, cs3, cs4, t0
       END SUBROUTINE saturation_adjustment_cuda
     END INTERFACE

@@ -51,4 +51,4 @@ add_executable(openacc_cuda_sample
     ${FORTRAN_SRC}
     ${CUDA_COMPILED}
 )
-target_link_libraries(openacc_cuda_sample stdc++ gcc_eh)
+target_link_libraries(openacc_cuda_sample stdc++ gcc_eh ${CUDA_LIBRARIES})
